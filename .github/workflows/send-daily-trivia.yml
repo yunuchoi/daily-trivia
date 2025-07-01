@@ -2,14 +2,14 @@ name: Send Daily Trivia
 
 on:
   schedule:
-    # Every 9 AM NZST
-    # - cron: '0 21 * * *'
+    # Every 8:42 AM NZST
+    - cron: "42 20 * * *"
 
     # TEST ONLY: Every 1 minute
     # - cron: "* * * * *"
 
     # TEST ONLY: Every 5 minutes
-    - cron: "*/5 * * * *"
+    # - cron: "*/5 * * * *"
 
   workflow_dispatch: # Allow manual execution
 
