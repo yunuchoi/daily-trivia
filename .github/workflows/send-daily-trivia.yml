@@ -1,0 +1,37 @@
+name: Send Daily Trivia
+
+on:
+  schedule:
+    # Every 9 AM NZST
+    # - cron: '0 21 * * *'
+
+    # TEST ONLY: Every 1 minute
+    - cron: "*/1 * * * *"
+
+  workflow_dispatch: # Allow manual execution
+
+jobs:
+  send-trivia-email:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Daily Trivia Script
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          RECIPIENTS: ${{ secrets.RECIPIENTS }}
+        run: python jippilji.py
