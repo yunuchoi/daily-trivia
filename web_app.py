@@ -14,5 +14,5 @@ def run_trivia():
     except Exception as e:
         return f'Error: {str(e)}', 500
 
-if __name__ == '__main__':
-    app.run()
+# if __name__ == '__main__':
+#     app.run()
