@@ -3,16 +3,12 @@
 This project sends a daily short trivia email using OpenAI's API and Gmail SMTP.  
 The email is styled with a respectful tone as befits a royal envoy.
 
----
-
 ## Prerequisites
 
 - Python 3.8 or higher
 - An OpenAI API key
 - A Gmail account with app password enabled (for SMTP)
 - `python-dotenv` for managing environment variables
-
----
 
 ## Setup
 
@@ -49,8 +45,6 @@ RECIPIENTS=recipient1@example.com,recipient2@example.com
 
 Note: Use an App Password generated in your Google Account for EMAIL_PASSWORD.
 
----
-
 ## Running the Script
 
 You may run the Python script directly:
@@ -71,14 +65,10 @@ Make sure the shell script has execution permission:
 chmod +x jippilji.sh
 ```
 
----
-
 ## Automating with cron or GitHub Actions
 
 - You may schedule the script with cron on your local machine.
 - Or deploy via GitHub Actions for cloud execution without your machine running.
-
----
 
 ## Notes
 
