@@ -1,11 +1,11 @@
-from openai import OpenAI
+import datetime
+import os
 import smtplib
+from dotenv import load_dotenv
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-import datetime
-
-from dotenv import load_dotenv
-import os
+from email.message import EmailMessage
+from openai import OpenAI
 
 load_dotenv()
 
@@ -38,21 +38,19 @@ def get_daily_trivia():
 
 
 def send_email(subject, body):
-    print(RECIPIENTS)
     recipients = RECIPIENTS.split(",")
 
-    msg = MIMEMultipart()
+    msg = EmailMessage()
     msg['From'] = f"집필지 (輯弼知) | ⚜ 조선 황실 비밀 보좌관"
-    msg['To'] = ", ".join(recipients)
     msg['Subject'] = subject
-    msg.attach(MIMEText(body, 'plain'))
+    msg['Bcc'] = ", ".join(recipients)
+    msg.set_content(body)
 
-    server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
-    server.starttls()
-    server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-    server.send_message(msg)
-    server.quit()
-    
+    with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+        server.starttls()
+        server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+        server.send_message(msg)
+
 
 if __name__ == "__main__":
     today = datetime.datetime.now().strftime("%Y년 %m월 %d일")
@@ -61,7 +59,7 @@ if __name__ == "__main__":
     body = (
         f"아뢰옵기 황송하오나, 아래는 오늘의 토막 상식이옵니다:\n\n"
         f"{trivia}"
-        f"\n"
+        f"\n\n"
         f"⚜ 조선 황실 비밀 보좌관 | 집필지 (輯弼知)"
     )
 

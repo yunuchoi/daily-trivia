@@ -1,2 +1,2 @@
-source /Users/yunuchoi/workspace/venv-jippilji/bin/activate
-python /Users/yunuchoi/workspace/jippilji.py
+source ./venv/bin/activate
+python3 jippilji.py
