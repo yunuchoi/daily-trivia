@@ -3,8 +3,6 @@ import os
 import random
 import smtplib
 from dotenv import load_dotenv
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 from email.message import EmailMessage
 from openai import OpenAI
 
@@ -18,22 +16,24 @@ EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
 RECIPIENTS = os.getenv("RECIPIENTS")
 
-# OpenAI Client
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 sender_name = "오늘의 토막상식"
-sender_subject_pairs = [
-    (f"{sender_name} <bots@yunuchoi.me>", "하루 한 입 지식, 받으셨나요? 🔍"),
-    (f"{sender_name} <bots@yunuchoi.me>", "오잉? 이런 사실 알고 계셨나요? 📬"),
-    (f"{sender_name} <bots@yunuchoi.me>", "오늘의 지식 간식 드셔보세요 🍿🧠"),
-    (f"{sender_name} <bots@yunuchoi.me>", "사알짝 똑똑해지는 오늘의 한 줄 ✨"),
-    (f"{sender_name} <bots@yunuchoi.me>", "오늘의 호기심 한 방울 도착! 💌"),
-    (f"{sender_name} <bots@yunuchoi.me>", "헉! 이런 것도 있었어? 🧠"),
-    (f"{sender_name} <bots@yunuchoi.me>", "당신의 두뇌에 오늘도 한 입 💡"),
-    (f"{sender_name} <bots@yunuchoi.me>", "딱! 하고 떨어지는 지식 한 조각 📸"),
-    (f"{sender_name} <bots@yunuchoi.me>", "상큼한 오늘의 상식 🍋"),
-    (f"{sender_name} <bots@yunuchoi.me>", "당신의 인박스에 작은 놀라움 ✉️")
+sender_email = f"{sender_name} <bots@yunuchoi.me>"
+
+subject_options = [
+    "하루 한 입 지식, 받으셨나요? 🔍",
+    "오잉? 이런 사실 알고 계셨나요? 📬",
+    "오늘의 지식 간식 드셔보세요 🍿🧠",
+    "사알짝 똑똑해지는 오늘의 한 줄 ✨",
+    "오늘의 호기심 한 방울 도착! 💌",
+    "헉! 이런 것도 있었어? 🧠",
+    "당신의 두뇌에 오늘도 한 입 💡",
+    "딱! 하고 떨어지는 지식 한 조각 📸",
+    "상큼한 오늘의 상식 🍋",
+    "당신의 인박스에 작은 놀라움 ✉️"
 ]
+
 
 def get_daily_trivia():
     prompt = (
@@ -57,17 +57,21 @@ def get_daily_trivia():
 
 def send_email(body):
     recipients = RECIPIENTS.split(",")
-    selected_sender, selected_subject_base = random.choice(sender_subject_pairs)
+    selected_subject_base = random.choice(subject_options)
 
     today = datetime.datetime.now().strftime("%Y년 %m월 %d일")
     selected_subject = f"{selected_subject_base} - {today} 오늘의 토막상식"
 
     msg = EmailMessage()
-    msg['From'] = selected_sender
+    msg['From'] = sender_email
     msg['To'] = "지식 구독자 <hello@yunuchoi.me>"
     msg['Subject'] = selected_subject
     msg['Bcc'] = ", ".join(recipients)
     msg.set_content(body)
+
+    print(f"Sending email to Bcc recipients:\n{recipients}\n")
+    print(f"Email Subject: {selected_subject}\n")
+    print(f"Email Body:\n{body}\n")
 
     with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
         server.starttls()
