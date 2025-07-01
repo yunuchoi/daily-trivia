@@ -3,6 +3,29 @@
 This project sends a daily short trivia email using OpenAI's API and Gmail SMTP.  
 The email is styled with a respectful tone as befits a royal envoy.
 
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Script as Script
+    participant OpenAI as OpenAI API
+    participant SMTP as SMTP Server
+    participant Recipients as Email Recipients
+
+    Script->>OpenAI: Request daily trivia (get_daily_trivia)
+    OpenAI-->>Script: Respond with trivia content
+
+    Script->>SMTP: Establish SMTP connection
+    SMTP-->>Script: Connection established
+
+    Script->>SMTP: Login with email and password
+    SMTP-->>Script: Login successful
+
+    Script->>SMTP: Send email message (BCC to recipients)
+    SMTP-->>Recipients: Deliver email
+
+    Script->>SMTP: Close connection
+```
+
 ## Prerequisites
 
 - Python 3.8 or higher
