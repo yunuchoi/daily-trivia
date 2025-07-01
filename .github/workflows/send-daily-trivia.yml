@@ -2,7 +2,6 @@ name: Send Daily Trivia
 
 on:
   schedule:
-    - cron: "7,15,26,34,42,49,54 0 * * *" # Every half an hour
     - cron: "54 20 * * *" # Every 8:54 AM NZST
 
     # TEST ONLY: Every 1 minute
