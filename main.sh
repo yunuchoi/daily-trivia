@@ -1,2 +1,2 @@
 source ./venv/bin/activate
-python3 jippilji.py
+python3 main.py

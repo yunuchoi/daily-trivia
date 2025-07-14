@@ -23,4 +23,4 @@ jobs:
       - name: Pull latest changes on PythonAnywhere
         run: |
           ssh yunuchoi@ssh.pythonanywhere.com \
-          "cd /home/yunuchoi/jippilji-daily-trivia && git pull origin main"
+          "cd /home/yunuchoi/daily-trivia && git pull origin main"

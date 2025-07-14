@@ -73,19 +73,19 @@ Note: Use an App Password generated in your Google Account for EMAIL_PASSWORD.
 You may run the Python script directly:
 
 ```bash
-python3 jippilji.py
+python3 main.py
 ```
 
 Or execute the provided shell script which activates the virtual environment and runs the Python script:
 
 ```bash
-./jippilji.sh
+./main.sh
 ```
 
 Make sure the shell script has execution permission:
 
 ```bash
-chmod +x jippilji.sh
+chmod +x main.sh
 ```
 
 ## Automating with cron or GitHub Actions
