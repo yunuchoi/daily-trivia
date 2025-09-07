@@ -61,7 +61,7 @@ def get_daily_trivia():
     )
 
     response = client.chat.completions.create(
-        model="o4-mini",
+        model="gpt-5",
         messages=[{"role": "user", "content": prompt}],
     )
     trivia = response.choices[0].message.content.strip()
